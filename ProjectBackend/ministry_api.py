@@ -1,13 +1,15 @@
 '''
 Created on Jul 29, 2015
 
-@author: burchtm
+@author: burchtm, johnsoaa
 '''
 import endpoints
 import protorpc
+from datetime import date
 
 from models import Event
 from models import Announcement
+from models import DailyVerse
 import main
 
 @endpoints.api(name="ministry", version="v1", description="Ministry API")
@@ -67,5 +69,9 @@ class MinistryApi(protorpc.remote.Service):
         request.key.delete()
         return Announcement(title='deleted')
 
+    @DailyVerse.method(request_fields=(), name="verse.today", path="verse/today", http_method="GET")
+    def daily_verse(self, request):
+        verse_query = DailyVerse.query(DailyVerse.last_touch_date == date.today())
+        return verse_query.get()
 
 app = endpoints.api_server([MinistryApi], restricted = False)
