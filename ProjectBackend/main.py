@@ -17,7 +17,7 @@ PARENT_KEY = ndb.Key("Entity", 'ministry_root')
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        events = Event.query(ancestor=PARENT_KEY).order(-Event.last_touch_date_time).fetch()
+        events = Event.query(ancestor=PARENT_KEY).order(-Event.date,-Event.time).fetch()
         announcements = Announcement.query(ancestor=PARENT_KEY).order(-Announcement.last_touch_date_time).fetch()
         template = jinja_env.get_template("templates/ministry.html")
         self.response.out.write(template.render({'events': events, 'announcements': announcements}))
