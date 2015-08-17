@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $('#display-add-event-modal').click(function () {
     $('input[name=date]').val("");
-    $('input[name=time]').val("");
+    //$('input[name=time]').val("");
     $('input[name=title]').val("");
     $('input[name=description]').val("");    
 	$('input[name=entity_key]').val("").prop("disabled", true);
@@ -18,8 +18,8 @@ $(document).ready(function() {
 		
 		date = $(this).find(".date").html();
 		$("#add-event-modal input[name=date]").val(date);
-		time = $(this).find(".time").html();
-		$("#add-event-modal input[name=time]").val(time);
+		//time = $(this).find(".time").html();
+		//$("#add-event-modal input[name=time]").val(time);
 		title = $(this).find(".title").html();
 		$("#add-event-modal input[name=title]").val(title);
 		description = $(this).find(".description").html();

@@ -17,6 +17,13 @@ indexes:
     direction: desc
 
 - kind: Event
+  properties:
+  - name: date
+    direction: desc
+  - name: time
+    direction: desc
+
+- kind: Event
   ancestor: yes
   properties:
   - name: last_touch_date_time

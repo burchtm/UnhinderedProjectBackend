@@ -1,11 +1,15 @@
+from datetime import date
+import datetime
 import os
+import time
 
 from google.appengine.ext import ndb
 import jinja2
 import webapp2
 
-from models import Event
 from models import Announcement
+from models import Event
+
 
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)), autoescape=True)
 
@@ -25,15 +29,17 @@ class InsertAction(webapp2.RequestHandler):
             if entity_key_urlsafe:
                 event_key = ndb.Key(urlsafe=entity_key_urlsafe)
                 event = event_key.get()
-                event.date = self.request.get("date")
-                event.time = self.request.get("time")
+                timestamp = datetime.datetime.strptime(self.request.get("date"), "%Y-%m-%dT%H:%M")
+                event.date = timestamp.date()
+                event.time = timestamp.time()
                 event.title = self.request.get("title")
                 event.description = self.request.get("description")
                 event.put()
             else:
+                timestamp = datetime.datetime.strptime(self.request.get("date"), "%Y-%m-%dT%H:%M")
                 new_event = Event(parent=PARENT_KEY,
-                                       date=self.request.get('date'),
-                                       time=self.request.get('time'),
+                                       date=timestamp.date(),
+                                       time=timestamp.time(),
                                        title=self.request.get('title'),
                                        description=self.request.get('description'))
                 new_event.put()

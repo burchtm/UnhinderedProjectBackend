@@ -7,8 +7,8 @@ from endpoints_proto_datastore.ndb.model import EndpointsModel
 class Event(EndpointsModel):
     """ An event. """
     _message_fields_schema = ("entityKey", "date", "time", "title", "description", "last_touch_date_time")
-    date = ndb.StringProperty()
-    time = ndb.StringProperty()
+    date = ndb.DateProperty()
+    time = ndb.TimeProperty()
     title = ndb.StringProperty()
     description = ndb.StringProperty()
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
