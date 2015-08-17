@@ -27,3 +27,4 @@ class DailyVerse(EndpointsModel):
     verse = ndb.StringProperty()
     last_touch_date = ndb.DateProperty(auto_now=True)    
     
+    

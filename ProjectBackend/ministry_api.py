@@ -69,9 +69,19 @@ class MinistryApi(protorpc.remote.Service):
         request.key.delete()
         return Announcement(title='deleted')
 
+  
     @DailyVerse.method(request_fields=(), name="verse.today", path="verse/today", http_method="GET")
     def daily_verse(self, request):
         verse_query = DailyVerse.query(DailyVerse.last_touch_date == date.today())
         return verse_query.get()
+
+    @DailyVerse.method(name="verse.today.insert", path="verse/today/insert", http_method="POST")
+    def insert_daily_verse(self, request):
+        if request.from_datastore:
+            daily_verse = request
+        else:
+            daily_verse = DailyVerse(verse=request.verse)
+        daily_verse.put()
+        return daily_verse
 
 app = endpoints.api_server([MinistryApi], restricted = False)
